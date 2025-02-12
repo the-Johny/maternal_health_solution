@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Johnson - Maternal Healthcare</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #c2185b;
+            --secondary-color: #ff4081;
+            --accent-color: #f8bbd0;
+            --text-color: #333;
+            --background-color: #fce4ec;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .hero-section {
+            position: relative;
+            height: 70vh;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 10, 10, 0.6);
+            z-index: -1;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .service-card .icon {
+            color: var(--primary-color);
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+        }
+
+        .service-card .btn {
+            transition: all 0.3s ease;
+        }
+
+        .service-card .btn:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="#">Maternal Health Center</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#patient-features">Patient Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#provider-features">Provider Features</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero-section" id="home">
+        <video autoplay loop muted class="hero-video">
+            <source src="{% static 'large.mp4' %}" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="container position-relative">
+            <h1 class="display-4">Maternal Healthcare Solutions</h1>
+            <p class="lead">Comprehensive care for mothers and expecting families</p>
+            <a href="#booking" class="btn btn-light btn-lg mt-3">Book Consultation</a>
+        </div>
+    </header>
+
+    <section class="container py-5" id="services">
+        <h2 class="text-center mb-5">Our Maternal Health Services</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="service-card text-center p-4">
+                    <i class="fas fa-calendar-check icon"></i>
+                    <h4>Prenatal Appointments</h4>
+                    <p>Regular checkups and monitoring</p>
+                    <span class="badge bg-primary">Full Package</span>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="service-card text-center p-4">
+                    <i class="fas fa-user-md icon"></i>
+                    <h4>Pregnancy Consultation</h4>
+                    <p>Expert guidance and personalized care</p>
+                    <span class="badge bg-primary">Comprehensive</span>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="service-card text-center p-4">
+                    <i class="fas fa-heart icon"></i>
+                    <h4>Postpartum Support</h4>
+                    <p>Care and recovery assistance</p>
+                    <span class="badge bg-primary">Individual Care</span>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="service-card text-center p-4">
+                    <i class="fas fa-baby icon"></i>
+                    <h4>Newborn Screening</h4>
+                    <p>Comprehensive health assessments</p>
+                    <span class="badge bg-primary">Complete Check</span>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="service-card text-center p-4">
+                    <i class="fas fa-laptop-medical icon"></i>
+                    <h4>Genetic Counseling</h4>
+                    <p>Personalized genetic risk assessment</p>
+                    <span class="badge bg-primary">Advanced</span>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="service-card text-center p-4">
+                    <i class="fas fa-venus icon"></i>
+                    <h4>Women's Wellness</h4>
+                    <p>Holistic maternal health programs</p>
+                    <span class="badge bg-primary">Wellness Package</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Patient Features Section -->
+    <section class="container py-5" id="patient-features">
+        <h2 class="text-center mb-5">Patient Features</h2>
+        <div class="row">
+            <!-- Patient Registration -->
+            <div class="col-md-4 mb-4">
+                <div class="service-card text-center p-4">
+                    <i class="fas fa-user-plus icon"></i>
+                    <h4>Patient Registration</h4>
+                    <p>Create your account and manage your medical profile</p>
+                    <a href="#register" class="btn btn-primary">Register Now</a>
+                </div>
+            </div>
+
+            <!-- Smart Appointment Scheduling -->
+            <div class="col-md-4 mb-4">
+                <div class="service-card text-center p-4">
+                    <i class="fas fa-mobile-alt icon"></i>
+                    <h4>Mobile Scheduling</h4>
+                    <p>Book appointments through our portal or mobile app</p>
+                    <a href="#schedule" class="btn btn-primary">Schedule Visit</a>
+                </div>
+            </div>
+
+            <!-- Telehealth Hub -->
+            <div class="col-md-4 mb-4">
+                <div class="service-card text-center p-4">
+                    <i class="fas fa-video icon"></i>
+                    <h4>Virtual Consultations</h4>
+                    <p>Connect with healthcare providers remotely</p>
+                    <a href="#telehealth" class="btn btn-primary">Start Session</a>
+                </div>
+            </div>
+
+            <!-- Emergency Alert System -->
+            <div class="col-md-4 mb-4">
+                <div class="service-card text-center p-4">
+                    <i class="fas fa-exclamation-triangle icon"></i>
+                    <h4>Emergency Alerts</h4>
+                    <p>Quick access to emergency healthcare support</p>
+                    <button class="btn btn-danger">Send Alert</button>
+                </div>
+            </div>
+
+            <!-- AI Health Tips -->
+            <div class="col-md-4 mb-4">
+                <div class="service-card text-center p-4">
+                    <i class="fas fa-robot icon"></i>
+                    <h4>Smart Health Tips</h4>
+                    <p>AI-powered personalized health recommendations</p>
+                    <a href="#tips" class="btn btn-primary">View Tips</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Healthcare Provider Features -->
+    <section class="container py-5" id="provider-features">
+        <h2 class="text-center mb-5">Healthcare Provider Features</h2>
+        <div class="row">
+            <!-- Medical Records System -->
+            <div class="col-md-6 mb-4">
+                <div class="service-card text-center p-4">
+                    <i class="fas fa-folder-open icon"></i>
+                    <h4>Medical Record Management</h4>
+                    <p>Comprehensive patient record system with secure access and real-time updates</p>
+                    <a href="#records" class="btn btn-primary">Access Records</a>
+                </div>
+            </div>
+
+            <!-- Analytics Dashboard -->
+            <div class="col-md-6 mb-4">
+                <div class="service-card text-center p-4">
+                    <i class="fas fa-chart-bar icon"></i>
+                    <h4>AI Analytics & Insights</h4>
+                    <p>Advanced analytics for improved patient care and public health insights</p>
+                    <a href="#analytics" class="btn btn-primary">View Analytics</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container py-5" id="contact">
+        <div class="row">
+            <div class="col-md-6">
+                <h3>Contact Maternal Health Center</h3>
+                <p>Get personalized maternal healthcare support</p>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Women's Health Street</li>
+                    <li><i class="fas fa-phone"></i> (555) MATERNAL-CARE</li>
+                    <li><i class="fas fa-envelope"></i> care@maternalhealth.com</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <form>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" placeholder="Your Name">
+                    </div>
+                    <div class="mb-3">
+                        <input type="email" class="form-control" placeholder="Your Email">
+                    </div>
+                    <div class="mb-3">
+                        <textarea class="form-control" placeholder="Your Inquiry" rows="4"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-dark text-white text-center py-3">
+        <p>&copy; 2024 Maternal Health Center. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
