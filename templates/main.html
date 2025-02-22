@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome - Healthcare Portal{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <h1 class="text-4xl font-bold text-gray-800 mb-8">Welcome to Healthcare Portal</h1>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold mb-4">Book Appointment</h2>
+            <p class="text-gray-600 mb-4">Schedule your next appointment with our healthcare professionals.</p>
+            <a href="{% url 'book_appointment' %}" class="inline-block bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">Book Now</a>
+        </div>
+
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold mb-4">Emergency Services</h2>
+            <p class="text-gray-600 mb-4">Need immediate medical attention? Create an emergency alert.</p>
+            <a href="{% url 'create_emergency_alert' %}" class="inline-block bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700">Emergency Alert</a>
+        </div>
+
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-xl font-semibold mb-4">Pregnancy Consultation</h2>
+            <p class="text-gray-600 mb-4">Schedule specialized care for your pregnancy journey.</p>
+            <a href="{% url 'create_pregnancy_consultation' %}" class="inline-block bg-purple-600 text-white px-6 py-2 rounded hover:bg-purple-700">Schedule Consultation</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

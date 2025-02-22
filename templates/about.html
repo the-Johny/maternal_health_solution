@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>Dr. Johnson</title>
+        <title>Healthcare Providers - Dr. Johnson</title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -12,7 +12,7 @@
         <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
 
         <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600|Nunito:600,700,800,900" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600|Nunito:600,700,800,900" rel="stylesheet">
 
         <!-- Bootstrap CSS File -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -26,6 +26,75 @@
         <!-- Main Stylesheet File -->
         <link href="css/hover-style.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
+
+        <!-- Additional CSS for providers page -->
+        <style>
+            .provider-section {
+                padding: 60px 0;
+            }
+
+            .provider-card {
+                background: #fff;
+                padding: 30px;
+                margin-bottom: 30px;
+                border-radius: 5px;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                transition: all 0.3s ease;
+            }
+
+            .provider-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            }
+
+            .provider-image {
+                width: 150px;
+                height: 150px;
+                border-radius: 50%;
+                margin: 0 auto 20px;
+                overflow: hidden;
+            }
+
+            .provider-image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+
+            .search-section {
+                background: #f8f9fa;
+                padding: 20px 0;
+                margin-bottom: 40px;
+            }
+
+            .search-box {
+                width: 100%;
+                padding: 10px 20px;
+                border: 1px solid #ddd;
+                border-radius: 25px;
+                margin-bottom: 20px;
+            }
+
+            .filter-bar {
+                margin-bottom: 20px;
+            }
+
+            .schedule-btn {
+                background: #007bff;
+                color: #fff;
+                padding: 10px 20px;
+                border-radius: 25px;
+                text-decoration: none;
+                display: inline-block;
+                margin-top: 15px;
+                transition: all 0.3s ease;
+            }
+
+            .schedule-btn:hover {
+                background: #0056b3;
+                color: #fff;
+            }
+        </style>
     </head>
 
     <body>
@@ -35,16 +104,13 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h1><a href="index.html">Dr. Johnson</a></h1>
-                        <!-- <a class="brand" href="index.html" title="Home"><img alt="Logo" src="img/logo.png"></a> -->
                     </div>
                 </div>
-
                 <div class="col-md-12">
-                    <h2>Your Family Doctor</h2>
+                    <h2>Healthcare Providers</h2>
                 </div>
             </div>
         </section>
-        <!-- Top Header End -->
 
         <!-- Header Start -->
         <header id="header">
@@ -52,20 +118,10 @@
                 <nav id="nav-menu-container">
                     <ul class="nav-menu">
                         <li><a href="index.html">Home</a></li>
-                        <li class="menu-active"><a href="about.html">About</a></li>
+                        <li><a href="about.html">About</a></li>
                         <li><a href="service.html">Services</a></li>
+                        <li class="menu-active"><a href="providers.html">Healthcare Providers</a></li>
                         <li><a href="booking.html">Booking</a></li>
-                        <li class="menu-has-children"><a href="#">pages</a>
-                            <ul>
-                                <li><a href="login.html">Login</a></li>
-                                <li class="menu-has-children"><a href="#">Drop Down</a>
-                                    <ul>
-                                        <li><a href="#">Drop Down 1</a></li>
-                                        <li><a href="#">Drop Down 2</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </li>
                         <li><a href="contact.html">Contact</a></li>
                     </ul>
                 </nav>
@@ -74,101 +130,105 @@
         <!-- Header End -->
 
         <main id="main">
-
-            <!-- About Section Start-->
-            <section id="about">
+            <!-- Search Section Start -->
+            <section class="search-section">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-5 col-md-6">
-                            <div class="about-col-left">
-                                <img class="img-fluid" src="img/about-us.jpg" />
-                            </div>
-                        </div>
-
-                        <div class="col-lg-7 col-md-6">
-                            <div class="about-col-right">
-                                <header class="section-header">
-                                    <h3>About Dr. Johnson</h3>
-                                </header>
-                                <ul class="icon">
-                                    <li><a href="#" class="fa fa-twitter"></a></li>
-                                    <li><a href="#" class="fa fa-facebook"></a></li>
-                                    <li><a href="#" class="fa fa-pinterest"></a></li>
-                                    <li><a href="#" class="fa fa-google-plus"></a></li>
-                                </ul>
-                                <p>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam convallis quam sed tincidunt accumsan. Aliquam at tincidunt tortor, ac porta turpis. Curabitur lacinia venenatis semper.
-                                </p>
-                                <p>
-                                    Aliquam ut nibh ut lacus posuere facilisis. Vestibulum ullamcorper arcu et bibendum ultrices. Suspendisse rutrum turpis vitae.
-                                </p>
-                                <a href="about.html">Read More</a>
-                            </div>
+                        <div class="col-md-12">
+                            <input type="text" class="search-box" placeholder="Search for providers...">
                         </div>
                     </div>
-                    
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <div class="about-col">
-                                <h4>Education</h4>
-                                <p>Medical School - University of Dulton Health Science Center.</p>
-                                <p>Residency in Family Medicine - University of Dulton Health Science Center.</p>
-                            </div>
+                    <div class="row filter-bar">
+                        <div class="col-md-4">
+                            <select class="form-control">
+                                <option>Filter by Specialty</option>
+                                <option>Family Medicine</option>
+                                <option>Pediatrics</option>
+                                <option>Internal Medicine</option>
+                            </select>
                         </div>
-                        <div class="col-sm-6">
-                            <div class="about-col">
-                                <h4>Experience</h4>
-                                <p>Medical School - University of Dulton Health Science Center.</p>
-                                <p>Residency in Family Medicine - University of Dulton Health Science Center.</p>
-                            </div>
+                        <div class="col-md-4">
+                            <select class="form-control">
+                                <option>Filter by Location</option>
+                                <option>Main Office</option>
+                                <option>North Branch</option>
+                                <option>South Branch</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-control">
+                                <option>Filter by Availability</option>
+                                <option>Available Today</option>
+                                <option>This Week</option>
+                                <option>Next Week</option>
+                            </select>
                         </div>
                     </div>
                 </div>
             </section>
-            <!-- About Section End-->
-            
-            <!-- Subscriber Section Start -->
-            <section id="subscriber">
-                <div class="container">
-                    <h3>Get Free Consultation</h3>
-                    <form class="form-inline">
-                        <div class="form-group">
-                            <input type="email" class="form-control" placeholder="Your Email Goes Here">
-                        </div>
-                        <button type="submit" class="btn">Submit</button>
-                    </form>
-                </div>
-            </section>
-            <!-- Subscriber Section end -->
-            
-            <!-- Support Section Start -->
-            <section id="support" class="wow fadeInUp">
-                <div class="container">
-                    <h1>
-                        Need help? Call me 24/7 at +1-234-567-8900
-                    </h1>
-                </div>
-            </section>
-            <!-- Support Section end -->
+            <!-- Search Section End -->
 
+            <!-- Providers Section Start -->
+            <section class="provider-section">
+                <div class="container">
+                    <div class="row">
+                        <!-- Provider Card 1 -->
+                        <div class="col-md-4">
+                            <div class="provider-card text-center">
+                                <div class="provider-image">
+                                    <img src="img/provider1.jpg" alt="Dr. Sarah Johnson">
+                                </div>
+                                <h4>Dr. Sarah Johnson</h4>
+                                <p class="specialty">Family Medicine</p>
+                                <p class="location">Main Office</p>
+                                <p class="availability">Available Today</p>
+                                <a href="booking.html" class="schedule-btn">Schedule Appointment</a>
+                            </div>
+                        </div>
+
+                        <!-- Provider Card 2 -->
+                        <div class="col-md-4">
+                            <div class="provider-card text-center">
+                                <div class="provider-image">
+                                    <img src="img/provider2.jpg" alt="Dr. Michael Chen">
+                                </div>
+                                <h4>Dr. Michael Chen</h4>
+                                <p class="specialty">Pediatrics</p>
+                                <p class="location">North Branch</p>
+                                <p class="availability">Next Available: Tomorrow</p>
+                                <a href="booking.html" class="schedule-btn">Schedule Appointment</a>
+                            </div>
+                        </div>
+
+                        <!-- Provider Card 3 -->
+                        <div class="col-md-4">
+                            <div class="provider-card text-center">
+                                <div class="provider-image">
+                                    <img src="img/provider3.jpg" alt="Dr. Emily Martinez">
+                                </div>
+                                <h4>Dr. Emily Martinez</h4>
+                                <p class="specialty">Internal Medicine</p>
+                                <p class="location">South Branch</p>
+                                <p class="availability">Available Today</p>
+                                <a href="booking.html" class="schedule-btn">Schedule Appointment</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Providers Section End -->
         </main>
 
         <!-- Footer Start -->
         <footer id="footer">
             <div class="container">
                 <div class="copyright">
-					<p>&copy; Copyright <a href="#">Your Site Name</a>. All Rights Reserved</p>
-								
-					<!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
-					<p>Designed By <a href="https://htmlcodex.com">HTML Codex</a></p>
+                    <p>&copy; Copyright <a href="#">Your Site Name</a>. All Rights Reserved</p>
+                    <p>Designed By <a href="https://htmlcodex.com">HTML Codex</a></p>
                 </div>
             </div>
         </footer>
-        <!-- Footer end -->
-
-        <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
-        <!-- Uncomment below i you want to use a preloader -->
-        <!-- <div id="preloader"></div> -->
+        <!-- Footer End -->
 
         <!-- JavaScript Libraries -->
         <script src="vendor/jquery/jquery.min.js"></script>
@@ -180,9 +240,6 @@
         <script src="vendor/superfish/superfish.min.js"></script>
         <script src="vendor/owlcarousel/owl.carousel.min.js"></script>
         <script src="vendor/touchSwipe/jquery.touchSwipe.min.js"></script>
-
-        <!-- Main Javascript File -->
         <script src="js/main.js"></script>
-
     </body>
 </html>
