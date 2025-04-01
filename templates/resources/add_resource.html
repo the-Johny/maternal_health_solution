@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if resource %}Edit Resource{% else %}Add New Resource{% endif %}{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="h4 mb-0">{% if resource %}Edit Resource{% else %}Add New Educational Resource{% endif %}</h2>
+                </div>
+                <div class="card-body">
+                    {% if messages %}
+                        <div class="messages mb-4">
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label for="{{ form.title.id_for_label }}" class="form-label">Title</label>
+                            {{ form.title }}
+                            {% if form.title.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.title.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.category.id_for_label }}" class="form-label">Category</label>
+                            {{ form.category }}
+                            {% if form.category.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.category.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="{{ form.content.id_for_label }}" class="form-label">Content</label>
+                            <small class="text-muted d-block mb-2">
+                                You can use basic formatting: paragraphs are automatically preserved.
+                            </small>
+                            {{ form.content }}
+                            {% if form.content.errors %}
+                                <div class="invalid-feedback d-block">
+                                    {{ form.content.errors }}
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                {% if resource %}Update Resource{% else %}Create Resource{% endif %}
+                            </button>
+                            {% if resource %}
+                                <a href="{% url 'resource_detail' resource.id %}" class="btn btn-secondary">Cancel</a>
+                            {% else %}
+                                <a href="{% url 'resource_list' %}" class="btn btn-secondary">Cancel</a>
+                            {% endif %}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,362 @@
+{% extends 'base.html' %}
+{% load static %}
+    {% block content %}
+
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="hero-badge">
+                        <i class="fas fa-check-circle"></i> Trusted by 2000+ Healthcare Providers
+                    </div>
+                    <h1>Complete <span>Maternal Health</span> Solution for Modern Care</h1>
+                    <p>MaternalCare helps expectant mothers and healthcare providers track pregnancy milestones, receive personalized health insights, and connect with specialists - all in one secure platform.</p>
+                    <div>
+                        <a href="#" class="btn">Start Your Journey</a>
+                        <a href="#" class="btn btn-outline" style="margin-left: 15px;">Book a Demo</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="{% static 'img/medical-team-with-protective-face-masks-prevent-infection-with-covid19-monitoring-sick-patient-clinical-appointment-hospital-ward-african-american-doctors-explaining-healthcare-treatment.jpg' %}" alt="Mother and child">
+                    <div class="hero-floating-badge">
+                        <div class="badge-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="badge-text">HIPAA Compliant</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="container">
+            <div class="stats-container">
+                <div class="stat-item">
+                    <div class="stat-value">98%</div>
+                    <div class="stat-label">Patient Satisfaction</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">30%</div>
+                    <div class="stat-label">Reduced Complications</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">2,000+</div>
+                    <div class="stat-label">Healthcare Providers</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">50,000+</div>
+                    <div class="stat-label">Mothers Supported</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <div class="section-subtitle">Our Features</div>
+                <h2>Comprehensive Maternal Care</h2>
+                <p>Our platform combines advanced technology with expert medical guidance to provide complete care throughout your pregnancy journey.</p>
+            </div>
+            <div class="feature-cards">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>Pregnancy Tracking</h3>
+                    <p>Track all your pregnancy milestones, appointments, and health metrics in one secure place with customized insights based on your health profile.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-stethoscope"></i>
+                    </div>
+                    <h3>Connect with Specialists</h3>
+                    <p>Virtual consultations with OB-GYNs, midwives, nutritionists, and mental health professionals specialized in maternal care.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3>Health Monitoring</h3>
+                    <p>Regular health assessments with AI-powered risk detection and personalized recommendations for a healthy pregnancy.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-book-medical"></i>
+                    </div>
+                    <h3>Educational Resources</h3>
+                    <p>Access to evidence-based articles, videos, and courses on pregnancy, childbirth, postpartum care, and early parenting.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Community Support</h3>
+                    <p>Connect with other expectant mothers in your area or with similar due dates through moderated support groups.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-hospital-user"></i>
+                    </div>
+                    <h3>Provider Integration</h3>
+                    <p>Seamlessly share health data with your healthcare providers and integrate with hospital electronic health record systems.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <div class="section-subtitle">How It Works</div>
+                <h2>Get Started in Three Simple Steps</h2>
+                <p>Our platform is designed to be intuitive and easy to use for both expectant mothers and healthcare providers.</p>
+            </div>
+            <div class="steps-container">
+                <div class="step-item">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Create Your Profile</div>
+                    <p class="step-description">Register and complete your health profile with relevant pregnancy details.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Connect with Providers</div>
+                    <p class="step-description">Link with your healthcare team or find specialists through our network.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Track Your Journey</div>
+                    <p class="step-description">Use our tools to monitor your health, access resources, and receive support.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <div class="section-subtitle">Testimonials</div>
+                <h2>What Our Users Say</h2>
+                <p>Join thousands of mothers and healthcare providers who trust MaternalCare for comprehensive maternal health support.</p>
+            </div>
+            <div class="testimonial-cards">
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"MaternalCare transformed my pregnancy experience. Having all my health information in one place and being able to connect with specialists virtually made everything so much easier."</p>
+                    <div class="testimonial-author">
+                        <div class="author-image">
+                            <img src="https://img.freepik.com/free-photo/medium-shot-smiley-pregnant-woman_23-2149304087.jpg" alt="Sarah J.">
+                        </div>
+
+                            <div class="author-info">
+                            <h4>Sarah J.</h4>
+                            <p>First-time mother</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p class="testimonial-text">"As an OB-GYN, I've seen how MaternalCare has improved patient engagement and outcomes. The health monitoring tools provide valuable insights that help me deliver better care."</p>
+                    <div class="testimonial-author">
+                        <div class="author-image">
+                            <img src="https://img.freepik.com/free-photo/medium-shot-smiley-pregnant-woman_23-2149304087.jpg" alt="Dr. Michael T.">
+                        </div>
+                        <div class="author-info">
+                            <h4>Dr. Michael T.</h4>
+                            <p>OB-GYN Specialist</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="testimonial-text">"The community support feature connected me with other mothers in my area. Having this support network made such a difference, especially as someone new to the country."</p>
+                    <div class="testimonial-author">
+                        <div class="author-image">
+                            <img src="https://img.freepik.com/free-photo/medium-shot-smiley-pregnant-woman_23-2149304087.jpg" alt="Priya K.">
+                        </div>
+                        <div class="author-info">
+                            <h4>Priya K.</h4>
+                            <p>Mother of twins</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="pricing">
+        <div class="container">
+            <div class="section-title">
+                <div class="section-subtitle">Pricing Plans</div>
+                <h2>Find the Right Plan for Your Needs</h2>
+                <p>Affordable options for individuals, healthcare providers, and institutions.</p>
+            </div>
+            <div class="pricing-tabs">
+                <div class="pricing-tab active">Monthly</div>
+                <div class="pricing-tab">Annual</div>
+            </div>
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <h3>Basic</h3>
+                    <div class="price">$9<span>/month</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Pregnancy Tracking</li>
+                        <li><i class="fas fa-check"></i> Basic Health Monitoring</li>
+                        <li><i class="fas fa-check"></i> Educational Resources</li>
+                        <li><i class="fas fa-check"></i> Community Access</li>
+                        <li><i class="fas fa-times"></i> Provider Integration</li>
+                        <li><i class="fas fa-times"></i> Specialist Consultations</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline">Choose Plan</a>
+                </div>
+                <div class="pricing-card popular">
+                    <div class="popular-badge">Popular</div>
+                    <h3>Premium</h3>
+                    <div class="price">$19<span>/month</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> All Basic Features</li>
+                        <li><i class="fas fa-check"></i> Advanced Health Monitoring</li>
+                        <li><i class="fas fa-check"></i> Provider Integration</li>
+                        <li><i class="fas fa-check"></i> 2 Free Specialist Consultations</li>
+                        <li><i class="fas fa-check"></i> Personalized Care Plans</li>
+                        <li><i class="fas fa-check"></i> Priority Support</li>
+                    </ul>
+                    <a href="#" class="btn">Choose Plan</a>
+                </div>
+                <div class="pricing-card">
+                    <h3>Provider</h3>
+                    <div class="price">$99<span>/month</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Patient Management Dashboard</li>
+                        <li><i class="fas fa-check"></i> EHR Integration</li>
+                        <li><i class="fas fa-check"></i> Unlimited Patient Profiles</li>
+                        <li><i class="fas fa-check"></i> Risk Assessment Tools</li>
+                        <li><i class="fas fa-check"></i> Specialist Network Access</li>
+                        <li><i class="fas fa-check"></i> Custom Analytics</li>
+                    </ul>
+                    <a href="#" class="btn btn-outline">Choose Plan</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq">
+        <div class="container">
+            <div class="section-title">
+                <div class="section-subtitle">FAQ</div>
+                <h2>Frequently Asked Questions</h2>
+                <p>Find answers to common questions about MaternalCare.</p>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Is my health data secure on the platform?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, MaternalCare is fully HIPAA compliant and uses industry-leading security standards to protect your health information. All data is encrypted and we never sell your information to third parties.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Can I connect with my existing healthcare provider?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely! You can invite your current healthcare providers to connect to your profile. We also offer integration with major hospital and clinic EHR systems for seamless data sharing with your consent.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>When should I start using MaternalCare?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You can start using MaternalCare at any point in your pregnancy journey. However, starting early provides the most comprehensive tracking and care support throughout your pregnancy.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Does MaternalCare offer postpartum support?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, our platform provides comprehensive postpartum support, including tracking recovery milestones, mental health resources, breastfeeding support, and baby development tracking for the first year.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>How do the virtual consultations work?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our virtual consultations are conducted through our secure in-app video platform. Premium users receive two free specialist consultations and can book additional sessions at preferred rates. All consultations are with licensed healthcare professionals specialized in maternal care.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Start Your Maternal Care Journey Today</h2>
+                <p>Join thousands of mothers and healthcare providers who trust MaternalCare for a healthy, supported pregnancy experience.</p>
+                <div>
+                    <a href="#" class="btn btn-white">Get Started</a>
+                    <a href="#" class="btn btn-outline" style="margin-left: 15px; color: white; border-color: white;">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <script>
+        // Toggle FAQ items
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            item.addEventListener('click', () => {
+                item.classList.toggle('active');
+            });
+        });
+
+        // Toggle pricing tabs
+        const pricingTabs = document.querySelectorAll('.pricing-tab');
+        pricingTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                pricingTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+            });
+        });
+
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        if (menuToggle) {
+            menuToggle.addEventListener('click', () => {
+                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            });
+        }
+    </script>
+    {% endblock %}

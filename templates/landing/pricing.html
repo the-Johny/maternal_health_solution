@@ -1,0 +1,350 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<section class="page-header">
+    <div class="container">
+        <h1>Pricing Plans</h1>
+        <p>Affordable solutions for maternal health care</p>
+    </div>
+</section>
+
+<section class="pricing-overview">
+    <div class="container">
+        <div class="section-title">
+            <div class="section-subtitle">Our Plans</div>
+            <h2>Find the Right Plan for Your Needs</h2>
+            <p>Flexible options for expectant mothers, healthcare providers, and institutions.</p>
+        </div>
+        
+        <div class="pricing-tabs">
+            <div class="pricing-tab active">Monthly</div>
+            <div class="pricing-tab">Annual <span class="save-badge">Save 20%</span></div>
+        </div>
+        
+        <div class="pricing-cards">
+            <div class="pricing-card">
+                <h3>Basic</h3>
+                <div class="price">$9<span>/month</span></div>
+                <p class="price-description">Perfect for early pregnancy tracking and basic support needs</p>
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check"></i> Pregnancy Tracking</li>
+                    <li><i class="fas fa-check"></i> Basic Health Monitoring</li>
+                    <li><i class="fas fa-check"></i> Educational Resources</li>
+                    <li><i class="fas fa-check"></i> Community Access</li>
+                    <li><i class="fas fa-times"></i> Provider Integration</li>
+                    <li><i class="fas fa-times"></i> Specialist Consultations</li>
+                    <li><i class="fas fa-times"></i> Personalized Care Plans</li>
+                    <li><i class="fas fa-times"></i> Priority Support</li>
+                </ul>
+                <a href="{% url 'get_started' %}" class="btn btn-outline">Choose Plan</a>
+            </div>
+            
+            <div class="pricing-card popular">
+                <div class="popular-badge">Popular</div>
+                <h3>Premium</h3>
+                <div class="price">$19<span>/month</span></div>
+                <p class="price-description">Comprehensive care throughout your pregnancy journey</p>
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check"></i> All Basic Features</li>
+                    <li><i class="fas fa-check"></i> Advanced Health Monitoring</li>
+                    <li><i class="fas fa-check"></i> Provider Integration</li>
+                    <li><i class="fas fa-check"></i> 2 Free Specialist Consultations</li>
+                    <li><i class="fas fa-check"></i> Personalized Care Plans</li>
+                    <li><i class="fas fa-check"></i> Priority Support</li>
+                    <li><i class="fas fa-check"></i> Weekly Health Assessments</li>
+                    <li><i class="fas fa-check"></i> Exclusive Educational Content</li>
+                </ul>
+                <a href="{% url 'get_started' %}" class="btn">Choose Plan</a>
+            </div>
+            
+            <div class="pricing-card">
+                <h3>Provider</h3>
+                <div class="price">$99<span>/month</span></div>
+                <p class="price-description">For healthcare providers and professionals</p>
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check"></i> Patient Management Dashboard</li>
+                    <li><i class="fas fa-check"></i> EHR Integration</li>
+                    <li><i class="fas fa-check"></i> Unlimited Patient Profiles</li>
+                    <li><i class="fas fa-check"></i> Risk Assessment Tools</li>
+                    <li><i class="fas fa-check"></i> Specialist Network Access</li>
+                    <li><i class="fas fa-check"></i> Custom Analytics</li>
+                    <li><i class="fas fa-check"></i> Team Collaboration Tools</li>
+                    <li><i class="fas fa-check"></i> Provider Support & Training</li>
+                </ul>
+                <a href="{% url 'get_started' %}" class="btn btn-outline">Choose Plan</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="annual-pricing" style="display: none;">
+    <div class="container">
+        <div class="pricing-cards">
+            <div class="pricing-card">
+                <h3>Basic</h3>
+                <div class="price">$86<span>/year</span></div>
+                <p class="price-description">Save $22 with annual billing</p>
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check"></i> Pregnancy Tracking</li>
+                    <li><i class="fas fa-check"></i> Basic Health Monitoring</li>
+                    <li><i class="fas fa-check"></i> Educational Resources</li>
+                    <li><i class="fas fa-check"></i> Community Access</li>
+                    <li><i class="fas fa-times"></i> Provider Integration</li>
+                    <li><i class="fas fa-times"></i> Specialist Consultations</li>
+                    <li><i class="fas fa-times"></i> Personalized Care Plans</li>
+                    <li><i class="fas fa-times"></i> Priority Support</li>
+                </ul>
+                <a href="{% url 'get_started' %}" class="btn btn-outline">Choose Plan</a>
+            </div>
+            
+            <div class="pricing-card popular">
+                <div class="popular-badge">Popular</div>
+                <h3>Premium</h3>
+                <div class="price">$182<span>/year</span></div>
+                <p class="price-description">Save $46 with annual billing</p>
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check"></i> All Basic Features</li>
+                    <li><i class="fas fa-check"></i> Advanced Health Monitoring</li>
+                    <li><i class="fas fa-check"></i> Provider Integration</li>
+                    <li><i class="fas fa-check"></i> 2 Free Specialist Consultations</li>
+                    <li><i class="fas fa-check"></i> Personalized Care Plans</li>
+                    <li><i class="fas fa-check"></i> Priority Support</li>
+                    <li><i class="fas fa-check"></i> Weekly Health Assessments</li>
+                    <li><i class="fas fa-check"></i> Exclusive Educational Content</li>
+                </ul>
+                <a href="{% url 'get_started' %}" class="btn">Choose Plan</a>
+            </div>
+            
+            <div class="pricing-card">
+                <h3>Provider</h3>
+                <div class="price">$950<span>/year</span></div>
+                <p class="price-description">Save $238 with annual billing</p>
+                <ul class="pricing-features">
+                    <li><i class="fas fa-check"></i> Patient Management Dashboard</li>
+                    <li><i class="fas fa-check"></i> EHR Integration</li>
+                    <li><i class="fas fa-check"></i> Unlimited Patient Profiles</li>
+                    <li><i class="fas fa-check"></i> Risk Assessment Tools</li>
+                    <li><i class="fas fa-check"></i> Specialist Network Access</li>
+                    <li><i class="fas fa-check"></i> Custom Analytics</li>
+                    <li><i class="fas fa-check"></i> Team Collaboration Tools</li>
+                    <li><i class="fas fa-check"></i> Provider Support & Training</li>
+                </ul>
+                <a href="{% url 'get_started' %}" class="btn btn-outline">Choose Plan</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="enterprise">
+    <div class="container">
+        <div class="enterprise-card">
+            <div class="enterprise-content">
+                <h2>Enterprise Solutions</h2>
+                <p>Custom plans for hospitals, healthcare networks, and insurance providers. Scale maternal care for your entire organization with tailored solutions.</p>
+                <ul class="enterprise-features">
+                    <li><i class="fas fa-check-circle"></i> Custom integration with existing systems</li>
+                    <li><i class="fas fa-check-circle"></i> Branded patient experience</li>
+                    <li><i class="fas fa-check-circle"></i> Advanced analytics and reporting</li>
+                    <li><i class="fas fa-check-circle"></i> Dedicated account management</li>
+                    <li><i class="fas fa-check-circle"></i> Staff training and support</li>
+                </ul>
+                <a href="{% url 'contact' %}" class="btn">Contact Sales</a>
+            </div>
+            <div class="enterprise-image">
+                <img src="/static/img/enterprise.jpg" alt="Enterprise Solutions">
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="comparison">
+    <div class="container">
+        <div class="section-title">
+            <div class="section-subtitle">Plan Comparison</div>
+            <h2>Detailed Feature Comparison</h2>
+            <p>Compare our plans to find the perfect fit for your needs.</p>
+        </div>
+        
+        <div class="comparison-table-wrapper">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Features</th>
+                        <th>Basic</th>
+                        <th>Premium</th>
+                        <th>Provider</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="feature-name">Pregnancy Tracking</td>
+                        <td><i class="fas fa-check"></i></td>
+                        <td><i class="fas fa-check"></i></td>
+                        <td><i class="fas fa-check"></i></td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">Health Monitoring</td>
+                        <td>Basic</td>
+                        <td>Advanced</td>
+                        <td>Advanced</td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">Educational Resources</td>
+                        <td>Limited</td>
+                        <td>Full Access</td>
+                        <td>Full Access</td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">Community Support</td>
+                        <td><i class="fas fa-check"></i></td>
+                        <td><i class="fas fa-check"></i></td>
+                        <td><i class="fas fa-check"></i></td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">Provider Integration</td>
+                        <td><i class="fas fa-times"></i></td>
+                        <td><i class="fas fa-check"></i></td>
+                        <td><i class="fas fa-check"></i></td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">Specialist Consultations</td>
+                        <td><i class="fas fa-times"></i></td>
+                        <td>2 Free/month</td>
+                        <td>Unlimited</td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">Risk Assessments</td>
+                        <td>Monthly</td>
+                        <td>Weekly</td>
+                        <td>Daily</td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">Patient Management</td>
+                        <td><i class="fas fa-times"></i></td>
+                        <td><i class="fas fa-times"></i></td>
+                        <td><i class="fas fa-check"></i></td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">Analytics Dashboard</td>
+                        <td><i class="fas fa-times"></i></td>
+                        <td>Basic</td>
+                        <td>Advanced</td>
+                    </tr>
+                    <tr>
+                        <td class="feature-name">Support</td>
+                        <td>Email</td>
+                        <td>Priority</td>
+                        <td>Dedicated</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<section class="faq">
+    <div class="container">
+        <div class="section-title">
+            <div class="section-subtitle">Questions</div>
+            <h2>Frequently Asked Questions</h2>
+            <p>Common questions about our pricing and plans.</p>
+        </div>
+        
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Can I change my plan during my pregnancy?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, you can upgrade or downgrade your plan at any time. When upgrading, you'll have immediate access to all new features. When downgrading, changes will take effect at the start of your next billing cycle.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Is there a free trial available?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Yes, we offer a 14-day free trial of our Premium plan for all new users. No credit card required to start your trial.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Do you offer refunds?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>If you're not satisfied with your purchase, contact us within 30 days for a full refund. Annual subscriptions are eligible for a prorated refund after the 30-day period.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Is my insurance accepted?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>MaternalCare is covered by select insurance providers. Check our insurance page for a current list of participating providers or contact your insurance company directly.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How are specialist consultations billed?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    <p>Premium users receive 2 free specialist consultations per month. Additional consultations can be booked at preferred rates. Provider plan users have unlimited access to specialist consultations for their patients.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta">
+    <div class="container">
+        <div class="cta-content">
+            <h2>Ready to Join MaternalCare?</h2>
+            <p>Get started today with our 14-day free trial. No credit card required.</p>
+            <div>
+                <a href="{% url 'get_started' %}" class="btn btn-white">Start Free Trial</a>
+                <a href="{% url 'contact' %}" class="btn btn-outline" style="margin-left: 15px; color: white; border-color: white;">Contact Sales</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Toggle FAQ items
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+        item.addEventListener('click', () => {
+            item.classList.toggle('active');
+        });
+    });
+    
+    // Toggle pricing tabs
+    const pricingTabs = document.querySelectorAll('.pricing-tab');
+    const monthlyPricing = document.querySelector('.pricing-cards');
+    const annualPricing = document.querySelector('.annual-pricing');
+    
+    pricingTabs.forEach((tab, index) => {
+        tab.addEventListener('click', () => {
+            pricingTabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+            
+            if (index === 0) {
+                monthlyPricing.style.display = 'flex';
+                annualPricing.style.display = 'none';
+            } else {
+                monthlyPricing.style.display = 'none';
+                annualPricing.style.display = 'block';
+            }
+        });
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare Provider Dashboard</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2980b9;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+        }
+
+        .sidebar {
+            background-color: var(--dark-color);
+            color: white;
+            height: 100vh;
+            position: fixed;
+            padding-top: 20px;
+        }
+
+        .sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 5px;
+            border-radius: 5px;
+            padding: 10px 15px;
+        }
+
+        .sidebar .nav-link:hover, .sidebar .nav-link.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .sidebar .nav-link i {
+            margin-right: 10px;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            border: none;
+        }
+
+        .card-header {
+            background-color: white;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            font-weight: 600;
+        }
+
+        .vital-stat {
+            text-align: center;
+            padding: 15px;
+        }
+
+        .vital-stat .value {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .vital-stat .label {
+            font-size: 12px;
+            color: #7f8c8d;
+            text-transform: uppercase;
+        }
+
+        .risk-factor {
+            display: inline-block;
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 3px 8px;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        .alert-high-risk {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+        }
+
+        .pregnancy-progress {
+            height: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .pregnancy-progress-bar {
+            height: 100%;
+            border-radius: 5px;
+            background-color: #e83e8c;
+        }
+
+        .calendar-day {
+            height: 100px;
+            overflow-y: auto;
+            border: 1px solid #dee2e6;
+            padding: 5px;
+        }
+
+        .calendar-day.today {
+            background-color: #e3f2fd;
+        }
+
+        .appointment-badge {
+            font-size: 12px;
+            margin-bottom: 3px;
+            display: block;
+            padding: 3px;
+            border-radius: 3px;
+        }
+
+        .medication-card {
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .trend-indicator {
+            font-size: 14px;
+            margin-left: 5px;
+        }
+
+        .trend-up {
+            color: #e74c3c;
+        }
+
+        .trend-down {
+            color: #2ecc71;
+        }
+
+        .trend-neutral {
+            color: #7f8c8d;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3 col-lg-2 d-md-block sidebar collapse">
+                <div class="text-center mb-4">
+                    <h4>MedCare Pro</h4>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-user-injured"></i> Patients
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-calendar-check"></i> Appointments
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-prescription-bottle-alt"></i> Medications
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-baby"></i> Pregnancy Care
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-chart-line"></i> Analytics
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <i class="fas fa-cog"></i> Settings
+                        </a>
+                    </li>
+                </ul>
+                <div class="position-absolute bottom-0 start-0 p-3 w-100">
+                    <div class="d-flex align-items-center">
+                        <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="User">
+                        <div>
+                            <div class="fw-bold">Dr. Sarah Johnson</div>
+                            <small class="text-muted">OB/GYN Specialist</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Patient Dashboard</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group me-2">
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Today</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Week</button>
+                            <button type="button" class="btn btn-sm btn-outline-secondary">Month</button>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-primary">
+                            <i class="fas fa-plus me-1"></i> New Patient
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Patient Overview Section -->
+                <div class="row mb-4">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span>Patient Information</span>
+                                <span class="badge bg-success">Active</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="text-center mb-3">
+                                    <img src="https://via.placeholder.com/100" class="rounded-circle" alt="Patient">
+                                    <h4 class="mt-2 mb-1">Emily Rodriguez</h4>
+                                    <p class="text-muted">32 years, Female</p>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <p><strong>ID:</strong> MR-8472</p>
+                                        <p><strong>Phone:</strong> (555) 123-4567</p>
+                                    </div>
+                                    <div class="col-6">
+                                        <p><strong>Last Visit:</strong> 05/15/2023</p>
+                                        <p><strong>Next Visit:</strong> 06/02/2023</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">Vital Statistics</div>
+                            <div class="card-body">
+                                <div class="row text-center">
+                                    <div class="col-4 vital-stat">
+                                        <div class="value">120/80</div>
+                                        <div class="label">BP (mmHg)</div>
+                                    </div>
+                                    <div class="col-4 vital-stat">
+                                        <div class="value">72</div>
+                                        <div class="label">Pulse (bpm)</div>
+                                    </div>
+                                    <div class="col-4 vital-stat">
+                                        <div class="value">98.6</div>
+                                        <div class="label">Temp (°F)</div>
+                                    </div>
+                                    <div class="col-4 vital-stat">
+                                        <div class="value">22</div>
+                                        <div class="label">BMI</div>
+                                    </div>
+                                    <div class="col-4 vital-stat">
+                                        <div class="value">64</div>
+                                        <div class="label">Weight (kg)</div>
+                                    </div>
+                                    <div class="col-4 vital-stat">
+                                        <div class="value">165</div>
+                                        <div class="label">Height (cm)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">Risk Factors</div>
+                            <div class="card-body">
+                                <span class="risk-factor">Family History</span>
+                                <span class="risk-factor">Hypertension</span>
+                                <span class="risk-factor">Gestational Diabetes</span>
+                                <span class="risk-factor">Advanced Maternal Age</span>
+                                <span class="risk-factor">Obesity</span>
+
+                                <div class="alert alert-warning mt-3 alert-high-risk">
+                                    <i class="fas fa-exclamation-triangle me-2"></i>
+                                    <strong>High Risk Pregnancy</strong> - Requires additional monitoring
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alerts and Pregnancy Tracking -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span>Alerts & Notifications</span>
+                                <span class="badge bg-danger">3 New</span>
+                            </div>
+                            <div class="card-body p-0">
+                                <div class="list-group list-group-flush">
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h6 class="mb-1 text-danger">Abnormal Glucose Test</h6>
+                                            <small>Today</small>
+                                        </div>
+                                        <p class="mb-1">Patient's glucose levels elevated in recent test (145 mg/dL)</p>
+                                        <small>Click to order additional tests</small>
+                                    </a>
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h6 class="mb-1">Missed Medication</h6>
+                                            <small>2 days ago</small>
+                                        </div>
+                                        <p class="mb-1">Patient reported missing 2 doses of prenatal vitamins</p>
+                                        <small>Click to send reminder</small>
+                                    </a>
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h6 class="mb-1">Upcoming Appointment</h6>
+                                            <small>3 days ago</small>
+                                        </div>
+                                        <p class="mb-1">Next appointment scheduled for June 2, 2023</p>
+                                        <small>Click to view details</small>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">Pregnancy Milestones</div>
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between mb-3">
+                                    <div>
+                                        <h5 class="mb-0">Week 24</h5>
+                                        <small class="text-muted">Second Trimester</small>
+                                    </div>
+                                    <div class="text-end">
+                                        <h5 class="mb-0">16 weeks left</h5>
+                                        <small class="text-muted">EDD: September 15, 2023</small>
+                                    </div>
+                                </div>
+
+                                <div class="pregnancy-progress">
+                                    <div class="pregnancy-progress-bar" style="width: 60%"></div>
+                                </div>
+
+                                <div class="mt-3">
+                                    <h6>Recent Milestones</h6>
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                            <span>Anatomy Scan Completed</span>
+                                            <span class="badge bg-success rounded-pill">Week 20</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                            <span>Glucose Screening</span>
+                                            <span class="badge bg-success rounded-pill">Week 24</span>
+                                        </li>
+                                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                            <span>Next: Rhogam Injection</span>
+                                            <span class="badge bg-primary rounded-pill">Week 28</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Appointment Calendar and Medications -->
+                <div class="row mb-4">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span>Appointment Calendar</span>
+                                <button class="btn btn-sm btn-primary">Schedule New</button>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Sun</th>
+                                                <th>Mon</th>
+                                                <th>Tue</th>
+                                                <th>Wed</th>
+                                                <th>Thu</th>
+                                                <th>Fri</th>
+                                                <th>Sat</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="calendar-day">28
+                                                    <span class="badge bg-secondary appointment-badge">No appointments</span>
+                                                </td>
+                                                <td class="calendar-day">29
+                                                    <span class="badge bg-secondary appointment-badge">No appointments</span>
+                                                </td>
+                                                <td class="calendar-day">30
+                                                    <span class="badge bg-secondary appointment-badge">No appointments</span>
+                                                </td>
+                                                <td class="calendar-day">31
+                                                    <span class="badge bg-secondary appointment-badge">No appointments</span>
+                                                </td>
+                                                <td class="calendar-day">1
+                                                    <span class="badge bg-info appointment-badge">10:00 AM - Annual Checkup</span>
+                                                </td>
+                                                <td class="calendar-day">2
+                                                    <span class="badge bg-primary appointment-badge">2:30 PM - Follow-up</span>
+                                                </td>
+                                                <td class="calendar-day today">3
+                                                    <span class="badge bg-warning text-dark appointment-badge">9:00 AM - Ultrasound</span>
+                                                    <span class="badge bg-danger appointment-badge">3:15 PM - High-risk consult</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="calendar-day">4
+                                                    <span class="badge bg-secondary appointment-badge">No appointments</span>
+                                                </td>
+                                                <td class="calendar-day">5
+                                                    <span class="badge bg-primary appointment-badge">11:00 AM - Prenatal</span>
+                                                </td>
+                                                <td class="calendar-day">6
+                                                    <span class="badge bg-secondary appointment-badge">No appointments</span>
+                                                </td>
+                                                <td class="calendar-day">7
+                                                    <span class="badge bg-secondary appointment-badge">No appointments</span>
+                                                </td>
+                                                <td class="calendar-day">8
+                                                    <span class="badge bg-info appointment-badge">1:00 PM - Nutrition Counseling</span>
+                                                </td>
+                                                <td class="calendar-day">9
+                                                    <span class="badge bg-secondary appointment-badge">No appointments</span>
+                                                </td>
+                                                <td class="calendar-day">10
+                                                    <span class="badge bg-secondary appointment-badge">No appointments</span>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <span>Current Medications</span>
+                                <button class="btn btn-sm btn-outline-primary">Prescribe</button>
+                            </div>
+                            <div class="card-body">
+                                <div class="list-group list-group-flush">
+                                    <div class="list-group-item medication-card">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h6 class="mb-1">Prenatal Vitamins</h6>
+                                            <small class="text-success">Active</small>
+                                        </div>
+                                        <p class="mb-1">1 tablet daily</p>
+                                        <small>Started: Jan 15, 2023</small>
+                                    </div>
+                                    <div class="list-group-item medication-card">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h6 class="mb-1">Iron Supplement</h6>
+                                            <small class="text-success">Active</small>
+                                        </div>
+                                        <p class="mb-1">325 mg daily</p>
+                                        <small>Started: Mar 2, 2023</small>
+                                    </div>
+                                    <div class="list-group-item medication-card">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h6 class="mb-1">Low-dose Aspirin</h6>
+                                            <small class="text-success">Active</small>
+                                        </div>
+                                        <p class="mb-1">81 mg daily</p>
+                                        <small>Started: Feb 10, 2023</small>
+                                    </div>
+                                    <div class="list-group-item medication-card">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h6 class="mb-1">Progesterone</h6>
+                                            <small class="text-muted">Completed</small>
+                                        </div>
+                                        <p class="mb-1">200 mg daily (vaginal)</p>
+                                        <small>Jan 15 - Mar 1, 2023</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Historical Data and Trends -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">Historical Data & Trends</div>
+                            <div class="card-body">
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="weight-tab" data-bs-toggle="tab" data-bs-target="#weight" type="button" role="tab">Weight</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="bp-tab" data-bs-toggle="tab" data-bs-target="#bp" type="button" role="tab">Blood Pressure</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="glucose-tab" data-bs-toggle="tab" data-bs-target="#glucose" type="button" role="tab">Glucose</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="medication-tab" data-bs-toggle="tab" data-bs-target="#medication" type="button" role="tab">Medication Adherence</button>
+                                    </li>
+                                </ul>
+                                <div class="tab-content p-3 border border-top-0" id="myTabContent">
+                                    <div class="tab-pane fade show active" id="weight" role="tabpanel">
+                                        <div class="d-flex justify-content-between mb-3">
+                                            <h5>Weight Trend</h5>
+                                            <div>
+                                                <span class="me-3">Current: 64 kg</span>
+                                                <span>Change: <span class="trend-indicator trend-up">+3.2 kg</span></span>
+                                            </div>
+                                        </div>
+                                        <img src="https://via.placeholder.com/1100x200?text=Weight+Trend+Chart" class="img-fluid" alt="Weight Trend">
+                                    </div>
+                                    <div class="tab-pane fade" id="bp" role="tabpanel">
+                                        <div class="d-flex justify-content-between mb-3">
+                                            <h5>Blood Pressure Trend</h5>
+                                            <div>
+                                                <span class="me-3">Current: 120/80 mmHg</span>
+                                                <span>Change: <span class="trend-indicator trend-down">-5/-2 mmHg</span></span>
+                                            </div>
+                                        </div>
+                                        <img src="https://via.placeholder.com/1100x200?text=Blood+Pressure+Trend+Chart" class="img-fluid" alt="BP Trend">
+                                    </div>
+                                    <div class="tab-pane fade" id="glucose" role="tabpanel">
+                                        <div class="d-flex justify-content-between mb-3">
+                                            <h5>Glucose Trend</h5>
+                                            <div>
+                                                <span class="me-3">Current: 145 mg/dL</span>
+                                                <span>Change: <span class="trend-indicator trend-up">+22 mg/dL</span></span>
+                                            </div>
+                                        </div>
+                                        <img src="https://via.placeholder.com/1100x200?text=Glucose+Trend+Chart" class="img-fluid" alt="Glucose Trend">
+                                    </div>
+                                    <div class="tab-pane fade" id="medication" role="tabpanel">
+                                        <div class="d-flex justify-content-between mb-3">
+                                            <h5>Medication Adherence</h5>
+                                            <div>
+                                                <span class="me-3">Adherence Rate: 87%</span>
+                                                <span>Change: <span class="trend-indicator trend-down">-5%</span></span>
+                                            </div>
+                                        </div>
+                                        <img src="https://via.placeholder.com/1100x200?text=Medication+Adherence+Chart" class="img-fluid" alt="Adherence Trend">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

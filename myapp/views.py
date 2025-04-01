@@ -1,214 +1,281 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
+from django.contrib.auth import login, authenticate, logout
+from django.contrib import messages
+from django.contrib.auth.models import User
 from django.utils import timezone
-from datetime import datetime
-from .models import (
-    Patient,
-    Appointment,
-    EmergencyAlert, VirtualConsultation, PregnancyConsultation
-)
+
+from resource.models import EducationalResource
+from .forms import UserRegistrationForm, PatientProfileForm, AppointmentForm, MedicalRecordForm, DoctorProfileForm, \
+    DoctorSignUpForm
+from .models import Patient, Appointment, MedicalRecord
+
+from django.db.models import Q
+
+def home(request):
+    resources = EducationalResource.objects.all().order_by('-created_at')[:3]
+    return render(request, 'landing/main.html', {'resources': resources})
+
+def services(request):
+    return render(request, 'landing/service.html')
+
+def pricing(request):
+    return render(request,'landing/pricing.html')
+
+def testimonial(request):
+    return render(request,'landing/testimonial.html')
+
+def contact(request):
+    return render(request,'landing/contact.html')
+
+def get_started(request):
+    return render(request,'landing/get-started.html')
 
 
-def index(request):
-    return render(request, 'index.html')
 
+
+
+# Authentication views
+def register_patient(request):
+    if request.method == 'POST':
+        user_form = UserRegistrationForm(request.POST)
+        profile_form = PatientProfileForm(request.POST)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user = user_form.save()
+            patient = profile_form.save(commit=False)
+            patient.user = user
+            patient.save()
+            login(request, user)
+            messages.success(request, "Registration successful!")
+            return redirect('login')
+    else:
+        user_form = UserRegistrationForm()
+        profile_form = PatientProfileForm()
+
+    return render(request, 'auth/patient_register.html', {
+        'user_form': user_form,
+        'profile_form': profile_form
+    })
+
+def register_provider(request):
+    if request.method == 'POST':
+        user_form = UserRegistrationForm(request.POST)
+        profile_form = DoctorSignUpForm(request.POST)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user = user_form.save()
+            provider = profile_form.save(commit=False)
+            provider.user = user
+            provider.save()
+            login(request, user)
+            messages.success(request, "Registration successful!")
+            return redirect('provider_dashboard')
+    else:
+        user_form = UserRegistrationForm()
+        profile_form = DoctorProfileForm()
+
+    return render(request, 'auth/provider_register.html', {
+        'user_form': user_form,
+        'profile_form': profile_form
+    })
+
+def user_login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            messages.success(request, "Login successful!")
+
+            if hasattr(user, 'patient_profile'):
+                return redirect('patient_dashboard')
+            elif hasattr(user, 'provider_profile'):
+                return redirect('provider_dashboard')
+            else:
+                return redirect('home')
+        else:
+            messages.error(request, "Invalid username or password.")
+
+    return render(request, 'auth/login.html')
+
+@login_required
+def user_logout(request):
+    logout(request)
+    messages.success(request, "You have been logged out.")
+    return redirect('home')
+
+@login_required
+def update_appointment(request, appointment_id):
+    # Your code to handle updating an appointment
+    # For example:
+    appointment = get_object_or_404(Appointment, id=appointment_id)
+    if request.method == 'POST':
+        form = AppointmentForm(request.POST, instance=appointment)
+        if form.is_valid():
+            form.save()
+            return redirect('appointment_detail', appointment_id=appointment_id)
+    else:
+        form = AppointmentForm(instance=appointment)
+    return render(request, 'update_appointment.html', {'form': form})
+
+# Patient views
+@login_required
+def patient_dashboard(request):
+    try:
+        patient = request.user.patient_profile
+    except Patient.DoesNotExist:
+        messages.error(request, "You are not registered as a patient.")
+        return redirect('home')
+
+    upcoming_appointments = Appointment.objects.filter(
+        patient=patient,
+        appointment_date__gte=timezone.now(),
+        status='scheduled'
+    ).order_by('appointment_date')
+
+    recent_records = MedicalRecord.objects.filter(
+        patient=patient
+    ).order_by('-date')[:5]
+
+    return render(request, 'patient/patient_dashboard.html', {
+        'patient': patient,
+        'upcoming_appointments': upcoming_appointments,
+        'recent_records': recent_records
+    })
 
 @login_required
 def book_appointment(request):
+    try:
+        patient = request.user.patient_profile
+    except Patient.DoesNotExist:
+        messages.error(request, "You are not registered as a patient.")
+        return redirect('home')
+
     if request.method == 'POST':
-        try:
-            date_str = request.POST.get('date')
-            time_str = request.POST.get('time')
-            appointment_type = request.POST.get('appointment_type')
-            notes = request.POST.get('notes', '')
-            is_virtual = request.POST.get('is_virtual', False)
-
-            # Combine date and time into datetime
-            date_time_str = f"{date_str} {time_str}"
-            appointment_date = datetime.strptime(date_time_str, '%Y-%m-%d %H:%M')
-
-            # Get the patient's healthcare provider
-            # You might want to implement logic to assign or select a provider
-            provider = request.user.patient.preferredprovider if hasattr(request.user.patient,
-                                                                         'preferredprovider') else None
-
-            if not provider:
-                return JsonResponse({
-                    'status': 'error',
-                    'message': 'No healthcare provider assigned'
-                }, status=400)
-
-            # Create the appointment
-            appointment = Appointment.objects.create(
-                patient=request.user.patient,
-                provider=provider,
-                appointment_type=appointment_type,
-                appointment_date=appointment_date,
-                notes=notes,
-                is_virtual=is_virtual,
-                status='SCHEDULED'
-            )
-
-            # If it's a virtual consultation, create the related record
-            if is_virtual:
-                VirtualConsultation.objects.create(
-                    patient=request.user.patient,
-                    provider=provider,
-                    appointment_date=appointment_date,
-                    meeting_link=f"https://meet.example.com/{appointment.id}",
-                    status='SCHEDULED'
-                )
-
-            # You can add email notification logic here
-            # send_appointment_confirmation(appointment)
-
-            return JsonResponse({
-                'status': 'success',
-                'appointment_id': appointment.id
-            })
-
-        except Exception as e:
-            return JsonResponse({
-                'status': 'error',
-                'message': str(e)
-            }, status=400)
-
-    # GET request - render booking form
-    return render(request, 'book-appointment.html')
+        form = AppointmentForm(request.POST)
+        if form.is_valid():
+            appointment = form.save(commit=False)
+            appointment.patient = patient
+            appointment.status = 'scheduled'
+            appointment.save()
+            messages.success(request, "Appointment scheduled successfully!")
+            return redirect('patient_dashboard')
+    else:
+        form = AppointmentForm()
 
 
-@login_required
-def patient_list(request):
-    patients = Patient.objects.all().select_related('user')
 
-    # Format patient data for template
-    patient_data = []
-    for patient in patients:
-        appointments = Appointment.objects.filter(patient=patient).order_by('-appointment_date')
-        latest_appointment = appointments.first()
+    return render(request, 'myapp/book_appointment.html', {
+        'form': form,
 
-        patient_data.append({
-            'id': patient.id,
-            'name': patient.user.get_full_name(),
-            'phone': patient.phone_number,
-            'blood_type': patient.blood_type,
-            'latest_appointment': latest_appointment.appointment_date if latest_appointment else None,
-            'total_appointments': appointments.count()
-        })
-
-    return render(request, 'patients.html', {
-        'patient_list': patient_data
     })
 
+@login_required
+def view_appointments(request):
+    try:
+        patient = request.user.patient_profile
+    except Patient.DoesNotExist:
+        messages.error(request, "You are not registered as a patient.")
+        return redirect('home')
+
+    status = request.GET.get('status', '')
+    if status:
+        appointments = Appointment.objects.filter(patient=patient, status=status).order_by('-appointment_date')
+    else:
+        appointments = Appointment.objects.filter(patient=patient).order_by('-appointment_date')
+
+    return render(request, 'myapp/view_appointments.html', {
+        'appointments': appointments,
+        'current_status': status
+    })
 
 @login_required
-def create_pregnancy_consultation(request):
+def view_medical_records(request):
+    try:
+        patient = request.user.patient_profile
+    except Patient.DoesNotExist:
+        messages.error(request, "You are not registered as a patient.")
+        return redirect('home')
+
+    medical_records = MedicalRecord.objects.filter(patient=patient).order_by('-date')
+
+    return render(request, 'myapp/view_medical_records.html', {
+        'medical_records': medical_records
+    })
+
+# Provider views
+@login_required
+def provider_dashboard(request):
+    try:
+        provider = request.user.provider_profile
+    except:
+        messages.error(request, "You are not registered as a healthcare provider.")
+        return redirect('home')
+
+    today = timezone.now().date()
+    today_appointments = Appointment.objects
+
+
+@login_required
+def patient_details(request, patient_id):
+
+    patient = get_object_or_404(Patient, id=patient_id)
+
+    # Check if the user has permission to view this patient
+    # Option 1: Only allow if it's the user's own profile
+    if request.user == patient.user:
+        # Context dictionary to pass to template
+        context = {
+            'patient': patient,
+            # Calculate age based on date_of_birth if needed
+            # Other derived data can be added here
+        }
+        return render(request, 'patient/patient_detail.html', context)
+    else:
+        # If not authorized, redirect or show access denied
+        # You might want to modify this based on your requirements
+        from django.core.exceptions import PermissionDenied
+        raise PermissionDenied("You don't have permission to view this patient's details.")
+
+
+@login_required
+def add_medical_record(request, patient_id):
+
+    patient = get_object_or_404(Patient, id=patient_id)
+
+    # Get the healthcare provider associated with the current user
+    try:
+        provider = request.user.healthcare_profile
+    except:
+        messages.error(request, "You must be a registered healthcare provider to add medical records.")
+        return redirect('patient_detail', patient_id=patient_id)
+
     if request.method == 'POST':
-        try:
-            date_str = request.POST.get('date')
-            time_str = request.POST.get('time')
-            pregnancy_week = int(request.POST.get('pregnancy_week'))
-            notes = request.POST.get('notes', '')
+        form = MedicalRecordForm(request.POST)
+        if form.is_valid():
+            # Create medical record but don't save to DB yet
+            medical_record = form.save(commit=False)
+            medical_record.patient = patient
+            medical_record.provider = provider
+            medical_record.date = timezone.now()
+            medical_record.save()
 
-            # Validate pregnancy week
-            if not 1 <= pregnancy_week <= 45:
-                raise ValueError("Invalid pregnancy week")
-
-            # Combine date and time
-            date_time_str = f"{date_str} {time_str}"
-            appointment_date = datetime.strptime(date_time_str, '%Y-%m-%d %H:%M')
-
-            # Get the provider (you might want to implement provider selection logic)
-            provider = request.user.patient.preferredprovider if hasattr(request.user.patient,
-                                                                         'preferredprovider') else None
-
-            if not provider:
-                return JsonResponse({
-                    'status': 'error',
-                    'message': 'No healthcare provider assigned'
-                }, status=400)
-
-            # Create the consultation
-            consultation = PregnancyConsultation.objects.create(
-                patient=request.user.patient,
-                provider=provider,
-                appointment_date=appointment_date,
-                pregnancy_week=pregnancy_week,
-                notes=notes,
-                status='SCHEDULED'
-            )
-
-            return JsonResponse({
-                'status': 'success',
-                'consultation_id': consultation.id
-            })
-
-        except Exception as e:
-            return JsonResponse({
-                'status': 'error',
-                'message': str(e)
-            }, status=400)
-
-    return render(request, 'pregnancy_consultation.html')
-
-
-@login_required
-def create_emergency_alert(request):
-    if request.method == 'POST':
-        try:
-            alert_type = request.POST.get('alert_type')
-            description = request.POST.get('description')
-            location = request.POST.get('location', '')
-
-            alert = EmergencyAlert.objects.create(
-                patient=request.user.patient,
-                alert_type=alert_type,
-                description=description,
-                location=location,
-                status='ACTIVE'
-            )
-
-            # Here you might want to add notification logic for healthcare providers
-            # notify_providers_of_emergency(alert)
-
-            return JsonResponse({
-                'status': 'success',
-                'alert_id': alert.id
-            })
-
-        except Exception as e:
-            return JsonResponse({
-                'status': 'error',
-                'message': str(e)
-            }, status=400)
-
-    return render(request, 'emergency-alert.html')
-
-
-@login_required
-def dashboard(request):
-    # Get patient's data for dashboard
-    patient = request.user.patient
+            messages.success(request, "Medical record added successfully.")
+            return redirect('patient_detail', patient_id=patient_id)
+    else:
+        # Pre-fill the patient field
+        form = MedicalRecordForm()
 
     context = {
-        'upcoming_appointments': Appointment.objects.filter(
-            patient=patient,
-            appointment_date__gte=timezone.now(),
-            status='SCHEDULED'
-        ).order_by('appointment_date')[:5],
-
-        'pregnancy_consultations': PregnancyConsultation.objects.filter(
-            patient=patient
-        ).order_by('-appointment_date')[:5],
-
-        'virtual_consultations': VirtualConsultation.objects.filter(
-            patient=patient
-        ).order_by('-appointment_date')[:5],
-
-        'emergency_alerts': EmergencyAlert.objects.filter(
-            patient=patient
-        ).order_by('-created_at')[:5]
+        'form': form,
+        'patient': patient
     }
+    return render(request, 'patient/add_medical_record.html', context)
 
-    return render(request, 'dashboard.html', context)
+
+def add_resource(request):
+    return None

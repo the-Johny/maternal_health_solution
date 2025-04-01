@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}Educational Resources{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1>Educational Resources</h1>
+            <p class="lead">Access helpful information about pregnancy, maternal health, and postnatal care</p>
+        </div>
+        <div class="col-md-4 text-md-end">
+            {% if user.is_authenticated and hasattr(user, 'healthcare_profile') %}
+                <a href="{% url 'add_resource' %}" class="btn btn-primary">
+                    <i class="fas fa-plus-circle"></i> Add New Resource
+                </a>
+            {% endif %}
+        </div>
+    </div>
+    
+    {% if messages %}
+        <div class="messages mb-4">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    
+    <!-- Category Filter -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Filter by Category</h5>
+            <div class="d-flex flex-wrap gap-2">
+                <a href="{% url 'resource_list' %}?category=all" 
+                   class="btn {% if current_category == 'all' %}btn-primary{% else %}btn-outline-primary{% endif %}">
+                    All
+                </a>
+                {% for category_name, category_display in category_choices %}
+                    <a href="{% url 'resource_list' %}?category={{ category_name }}" 
+                       class="btn {% if current_category == category_name %}btn-primary{% else %}btn-outline-primary{% endif %}">
+                        {{ category_display }}
+                    </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Resources List -->
+    <div class="row">
+        {% if resources %}
+            {% for resource in resources %}
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            {% if resource.category == 'nutrition' %}
+                                <span class="badge bg-success">Nutrition</span>
+                            {% elif resource.category == 'exercise' %}
+                                <span class="badge bg-info">Exercise</span>
+                            {% elif resource.category == 'prenatal' %}
+                                <span class="badge bg-primary">Prenatal Care</span>
+                            {% elif resource.category == 'postnatal' %}
+                                <span class="badge bg-secondary">Postnatal Care</span>
+                            {% elif resource.category == 'complications' %}
+                                <span class="badge bg-warning">Complications</span>
+                            {% else %}
+                                <span class="badge bg-dark">General Wellness</span>
+                            {% endif %}
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ resource.title }}</h5>
+                            <p class="card-text">{{ resource.content|truncatewords:30 }}</p>
+                        </div>
+                        <div class="card-footer bg-white d-flex justify-content-between align-items-center">
+                            <small class="text-muted">By: {{ resource.author }}</small>
+                            <a href="{% url 'resource_detail' resource.id %}" class="btn btn-sm btn-outline-primary">
+                                Read More
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12">
+                <div class="alert alert-info">
+                    No educational resources found for this category. Check back later or try a different category.
+                </div>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

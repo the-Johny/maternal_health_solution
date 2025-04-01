@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <h1 class="mb-4">Get Started</h1>
+            <p class="lead mb-5">Choose how you would like to register with our platform</p>
+
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">Patient</h5>
+                            <p class="card-text">Register as a patient to book appointments and access healthcare services.</p>
+                            <a href="{% url 'patient_register' %}" class="btn btn-primary mt-auto">Register as Patient</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">Provider</h5>
+                            <p class="card-text">Register as a healthcare provider to manage appointments and patients.</p>
+                            <a href="{% url 'provider_register' %}" class="btn btn-success mt-auto">Register as Provider</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">Admin</h5>
+                            <p class="card-text">Register as an administrator to manage the entire platform.</p>
+                            <a href="#" class="btn btn-secondary mt-auto">Register as Admin</a>
+                        </div>
+                    </div>
+                </div>
+            </div>a
+
+            <div class="mt-5">
+                <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

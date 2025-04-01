@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ resource.title }}{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    {% if messages %}
+        <div class="messages mb-4">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <!-- Resource Header -->
+            <div class="mb-4">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{% url 'resource_list' %}">Resources</a></li>
+                        <li class="breadcrumb-item"><a href="{% url 'resource_list' %}?category={{ resource.category }}">{{ resource.get_category_display }}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ resource.title }}</li>
+                    </ol>
+                </nav>
+                <h1 class="mb-3">{{ resource.title }}</h1>
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <span class="badge 
+                            {% if resource.category == 'nutrition' %}bg-success
+                            {% elif resource.category == 'exercise' %}bg-info
+                            {% elif resource.category == 'prenatal' %}bg-primary
+                            {% elif resource.category == 'postnatal' %}bg-secondary
+                            {% elif resource.category == 'complications' %}bg-warning
+                            {% else %}bg-dark{% endif %}">
+                            {{ resource.get_category_display }}
+                        </span>
+                        <small class="text-muted ms-2">By {{ resource.author }}</small>
+                        <small class="text-muted ms-2">Updated: {{ resource.updated_at|date:"F d, Y" }}</small>
+                    </div>
+                    
+                    {% if user.is_authenticated and user.healthcare_profile == resource.author %}
+                        <a href="{% url 'edit_resource' resource.id %}" class="btn btn-sm btn-outline-primary">
+                            Edit Resource
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Resource Content -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="resource-content">
+                        {{ resource.content|linebreaks }}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Actions -->
+            <div class="d-flex justify-content-between mb-5">
+                <a href="{% url 'resource_list' %}" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to Resources
+                </a>
+                <div>
+                    <button class="btn btn-outline-primary me-2" onclick="window.print()">
+                        <i class="fas fa-print"></i> Print
+                    </button>
+                    <button class="btn btn-outline-success" onclick="shareResource()">
+                        <i class="fas fa-share-alt"></i> Share
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Related Resources (Optional) -->
+            <div class="card">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Related Resources</h5>
+                </div>
+                <div class="card-body">
+                    {% with related_resources=resource.get_related_resources %}
+                        {% if related_resources %}
+                            <div class="list-group">
+                                {% for related in related_resources %}
+                                    <a href="{% url 'resource_detail' related.id %}" class="list-group-item list-group-item-action">
+                                        {{ related.title }}
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <p class="mb-0">No related resources available.</p>
+                        {% endif %}
+                    {% endwith %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function shareResource() {
+        if (navigator.share) {
+            navigator.share({
+                title: '{{ resource.title }}',
+                text: 'Check out this educational resource: {{ resource.title }}',
+                url: window.location.href,
+            })
+            .catch(console.error);
+        } else {
+            alert('Share feature is not supported in your browser. You can copy the URL from the address bar.');
+        }
+    }
+</script>
+{% endblock %}
