@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate, logout
@@ -8,7 +9,7 @@ from django.utils import timezone
 from resource.models import EducationalResource
 from .forms import UserRegistrationForm, PatientProfileForm, AppointmentForm, MedicalRecordForm, DoctorProfileForm, \
     DoctorSignUpForm
-from .models import Patient, Appointment, MedicalRecord
+from .models import NutritionLog, Patient, Appointment, MedicalRecord
 
 from django.db.models import Q
 
@@ -147,6 +148,10 @@ def patient_dashboard(request):
         'recent_records': recent_records
     })
 
+# views.py - update book_appointment view
+from datetime import datetime
+
+
 @login_required
 def book_appointment(request):
     try:
@@ -158,20 +163,31 @@ def book_appointment(request):
     if request.method == 'POST':
         form = AppointmentForm(request.POST)
         if form.is_valid():
+            # Get cleaned data including the combined appointment_date
             appointment = form.save(commit=False)
+
+            # Debug print statements
+            print(f"Form is valid: {form.cleaned_data}")
+            print(f"Appointment date from form: {form.cleaned_data.get('appointment_date')}")
+
+            # Make sure appointment_date is set
+            if form.cleaned_data.get('appointment_date'):
+                appointment.appointment_date = form.cleaned_data.get('appointment_date')
+
             appointment.patient = patient
             appointment.status = 'scheduled'
             appointment.save()
             messages.success(request, "Appointment scheduled successfully!")
             return redirect('patient_dashboard')
+        else:
+            # Print form errors for debugging
+            print(f"Form errors: {form.errors}")
+            messages.error(request, "Please correct the errors below.")
     else:
         form = AppointmentForm()
 
-
-
-    return render(request, 'myapp/book_appointment.html', {
+    return render(request, 'book-appointment.html', {
         'form': form,
-
     })
 
 @login_required
@@ -188,7 +204,7 @@ def view_appointments(request):
     else:
         appointments = Appointment.objects.filter(patient=patient).order_by('-appointment_date')
 
-    return render(request, 'myapp/view_appointments.html', {
+    return render(request, 'patient/appointments.html', {
         'appointments': appointments,
         'current_status': status
     })
@@ -203,7 +219,7 @@ def view_medical_records(request):
 
     medical_records = MedicalRecord.objects.filter(patient=patient).order_by('-date')
 
-    return render(request, 'myapp/view_medical_records.html', {
+    return render(request, 'patient/records.html', {
         'medical_records': medical_records
     })
 
@@ -279,3 +295,38 @@ def add_medical_record(request, patient_id):
 
 def add_resource(request):
     return None
+
+@login_required
+def patient_recommendations(request):
+    """View for displaying personalized health recommendations to patients"""
+    try:
+        # Get the patient profile for the current user
+        patient = Patient.objects.get(user=request.user)
+        
+        # Get recent nutrition logs (last 7 days)
+        recent_logs = NutritionLog.objects.filter(
+            patient=patient,
+            date__gte=datetime.now().date() - timedelta(days=7)
+        )
+        
+        # Initialize recommendation engine
+        recommender = MaternalHealthRecommender()
+        
+        # Get personalized recommendations
+        recommendations = recommender.get_personalized_recommendations(
+            patient, recent_logs
+        )
+        
+        context = {
+            'patient': patient,
+            'recommendations': recommendations,
+        }
+        
+        return render(request, 'maternal_health/recommendations.html', context)
+    
+    except Patient.DoesNotExist:
+        # If the user is not a patient, show appropriate message
+        context = {
+            'error': 'You need a patient profile to access recommendations.'
+        }
+        return render(request, 'maternal_health/error.html', context)

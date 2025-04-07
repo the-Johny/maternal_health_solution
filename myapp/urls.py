@@ -23,6 +23,7 @@ urlpatterns = [
     path('patient/appointments/book/', views.book_appointment, name='book_appointment'),
     path('patient/appointments/', views.view_appointments, name='view_appointments'),
     path('patient/medical-records/', views.view_medical_records, name='view_medical_records'),
+    path('recommendations/', views.patient_recommendations, name='patient_recommendations'),
 
     # Provider routes
     path('provider/dashboard/', views.provider_dashboard, name='provider_dashboard'),
